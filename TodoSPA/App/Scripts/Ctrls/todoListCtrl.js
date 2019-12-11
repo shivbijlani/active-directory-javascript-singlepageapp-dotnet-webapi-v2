@@ -9,7 +9,7 @@
         // Get TodoList Data
         $.ajax({
             type: "GET",
-            url: "/api/TodoList",
+            url: "/api/calendar",
             headers: {
                 'Authorization': 'Bearer ' + accessToken,
             },
@@ -21,8 +21,8 @@
             // For Each Todo Item Returned, Append a Table Row
             var output = data.reduce(function (rows, todoItem, index, todos) {
                 var $entry = $template;
-                var $description = $entry.find(".view-data-description").html(todoItem.Description);
-                $entry.find(".data-template").attr('data-todo-id', todoItem.ID);
+                var $description = $entry.find(".view-data-description").html(todoItem.subject);
+                $entry.find(".data-template").attr('data-todo-id', todoItem.id);
                 return rows + $entry.html();
             }, '');
 

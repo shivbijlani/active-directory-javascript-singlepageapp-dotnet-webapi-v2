@@ -12,4 +12,11 @@ namespace TodoSPA.Models
         public string Description { get; set; }
         public string Owner { get; set; }
     }
+
+    public class UserProfile
+    {
+        public string DisplayName { get; set; }
+        public string GivenName { get; set; }
+        public string Surname { get; set; }
+    }
 }

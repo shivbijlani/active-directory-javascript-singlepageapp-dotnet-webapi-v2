@@ -30,6 +30,7 @@ namespace TodoSPA
                 // signed up for the app.  Here, we'll just turn it off.
 
                 ValidateIssuer = false,
+                SaveSigninToken = true
             };
 
             // Set up the OWIN pipeline to use OAuth 2.0 Bearer authentication.

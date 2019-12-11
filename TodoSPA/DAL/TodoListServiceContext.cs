@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TodoListService;
 using TodoSPA.Models;
 
 namespace TodoSPA.DAL
@@ -14,5 +15,7 @@ namespace TodoSPA.DAL
             : base("TodoListServiceContext")
         { }
         public DbSet<Todo> Todoes { get; set; }
+
+        public DbSet<PerWebUserCache> PerUserCacheList { get; set; }
     }
 }
