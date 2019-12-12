@@ -62,7 +62,9 @@ To use this sample, you will need :
 
 1. This quickstart requires the [Implicit grant flow](https://docs.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-implicit-grant-flow) to be enabled. In the left-hand navigation pane of the registered application, select **Authentication**.
 
-1. In **Advanced settings**, under **Implicit grant**, enable both **ID tokens** and **Access tokens** checkboxes. ID tokens and Access tokens are required since this app needs to sign in users and call an API.
+1. In **Advanced settings**, under **Implicit grant**, enable both **ID tokens** ~~and **Access tokens**~~ checkboxes. ID tokens and Access tokens are required since this app needs to sign in users and call an API.
+
+1. In **API Permissions** add the Calendars.ReadWrite scope from the Microsoft Graph API.
 
 1. Select **Save**.
 
