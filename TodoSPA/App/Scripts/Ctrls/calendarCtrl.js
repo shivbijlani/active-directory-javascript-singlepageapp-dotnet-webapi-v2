@@ -4,9 +4,9 @@
     var viewHTML;
     var scope = [window.config.clientID];
 
-    // Calls the TodoList Web API with an HTTP Bearer access request, and update data
-    function getTodoList(accessToken, dataContainer, loading) {
-        // Get TodoList Data
+    // Calls the calendarList Web API with an HTTP Bearer access request, and update data
+    function getCalendar(accessToken, dataContainer, loading) {
+        // Get calendarList Data
         $.ajax({
             type: "GET",
             url: "/api/calendar",
@@ -18,11 +18,11 @@
             var $html = $(viewHTML);
             var $template = $html.find(".data-container");
 
-            // For Each Todo Item Returned, Append a Table Row
-            var output = data.reduce(function (rows, todoItem, index, todos) {
+            // For Each calendar Item Returned, Append a Table Row
+            var output = data.reduce(function (rows, calendarItem, index, calendars) {
                 var $entry = $template;
-                var $description = $entry.find(".view-data-description").html(todoItem.subject);
-                $entry.find(".data-template").attr('data-todo-id', todoItem.id);
+                var $description = $entry.find(".view-data-description").html(calendarItem.subject);
+                $entry.find(".data-template").attr('data-calendar-id', calendarItem.id);
                 return rows + $entry.html();
             }, '');
 
@@ -31,7 +31,7 @@
             dataContainer.html(output);
 
         }).fail(function (jqXHR, textStatus) {
-            printErrorMessage('Error getting todo list data')
+            printErrorMessage('Error getting calendar list data')
         }).always(function () {
 
             // Register Handlers for Buttons in Data Table
@@ -40,43 +40,43 @@
     }
 
 
-    // Calls the TodoList Web API with an HTTP Bearer access request, and deletes a todo item
-    function deleteTodoItem(accessToken, todoId) {
-        // Delete the Todo
+    // Calls the Calendar Web API with an HTTP Bearer access request, and deletes a calendar item
+    function deleteCalendarItem(accessToken, calendarId) {
+        // Delete the Calendar
         $.ajax({
             type: "DELETE",
-            url: "/api/TodoList/" + todoId,
+            url: "/api/Calendar/" + calendarId,
             headers: {
                 'Authorization': 'Bearer ' + accessToken,
             },
         }).done(function () {
             console.log('DELETE success.');
         }).fail(function () {
-            console.log('Fail on new Todo DELETE');
-            printErrorMessage('Error deleting todo item.')
+            console.log('Fail on new Calendar DELETE');
+            printErrorMessage('Error deleting calendar item.')
         }).always(function () {
             refreshViewData();
         });
     }
 
-    // Calls the TodoList Web API with an HTTP Bearer acess request, and saves a todo item
-    function saveTodoItem(accessToken, todoId, description) {
-        // Update Todo Item
+    // Calls the Calendar Web API with an HTTP Bearer acess request, and saves a calendar item
+    function saveCalendarItem(accessToken, calendarId, description) {
+        // Update Calendar Item
         $.ajax({
             type: "PUT",
-            url: "/api/TodoList",
+            url: "/api/Calendar",
             headers: {
                 'Authorization': 'Bearer ' + accessToken,
             },
             data: {
                 Description: description.val(),
-                ID: todoId,
+                ID: calendarId,
             },
         }).done(function () {
             console.log('PUT success.');
         }).fail(function () {
-            console.log('Fail on todo PUT');
-            printErrorMessage('Error saving todo item.')
+            console.log('Fail on calendar PUT');
+            printErrorMessage('Error saving calendar item.')
         }).always(function () {
             refreshViewData();
             description.val('');
@@ -90,13 +90,13 @@
         $dataContainer.empty();
         var $loading = $(".view-loading");
 
-        // Get the access token for the backend, and calls the Web API to refresh the todo list
+        // Get the access token for the backend, and calls the Web API to refresh the calendar list
         clientApplication.acquireTokenSilent(scope)
             .then(function (token) {
-                getTodoList(token, $dataContainer, $loading);
+                getCalendar(token, $dataContainer, $loading);
             }, function (error) {
                 clientApplication.acquireTokenPopup(scope).then(function (token) {
-                    getTodoList(token, $dataContainer, $loading);
+                    getCalendar(token, $dataContainer, $loading);
                 }, function (error) {
                     printErrorMessage(error);
                 });
@@ -111,15 +111,15 @@
         $(".view-data-delete").click(function (event) {
             clearErrorMessage();
 
-            var todoId = $(event.target).parents(".data-template").attr("data-todo-id");
+            var calendarId = $(event.target).parents(".data-template").attr("data-calendar-id");
 
             // Get the access token for the backend, and calls the Web API to delete the current item
             clientApplication.acquireTokenSilent(scope)
                 .then(function (token) {
-                    deleteTodoItem(token, todoId);
+                    deleteCalendarItem(token, calendarId);
                 }, function (error) {
                     clientApplication.acquireTokenPopup(scope).then(function (token) {
-                        deleteTodoItem(token, todoId);
+                        deleteCalendarItem(token, calendarId);
                     }, function (error) {
                         printErrorMessage(error);
                     });
@@ -154,22 +154,22 @@
         $(".view-data-save").click(function (event) {
             clearErrorMessage();
             var $entry = $(event.target).parents(".data-template");
-            var todoId = $entry.attr("data-todo-id");
+            var calendarId = $entry.attr("data-calendar-id");
 
-            // Validate Todo Description
+            // Validate Calendar Description
             var $description = $entry.find(".view-data-edit-input");
             if ($description.val().length <= 0) {
-                printErrorMessage('Please enter a valid Todo description');
+                printErrorMessage('Please enter a valid Calendar description');
                 return;
             }
 
             // Get the access token for the backend, and calls the Web API to save the current item
             clientApplication.acquireTokenSilent(scope)
                 .then(function (token) {
-                    saveTodoItem(token, todoId, $description);
+                    saveCalendarItem(token, calendarId, $description);
                 }, function (error) {
                     clientApplication.acquireTokenPopup(scope).then(function (token) {
-                        deleteTodoItem(token, todoId, $description);
+                        deleteCalendarItem(token, calendarId, $description);
                     }, function (error) {
                         printErrorMessage(error);
                     });
@@ -178,11 +178,11 @@
         });
     };
 
-    function postNewTodo(accesstoken, description) {
-        // POST a New Todo
+    function postNewCalendar(accesstoken, description) {
+        // POST a New Calendar
         $.ajax({
             type: "POST",
-            url: "/api/TodoList",
+            url: "/api/Calendar",
             headers: {
                 'Authorization': 'Bearer ' + accesstoken,
             },
@@ -192,11 +192,11 @@
         }).done(function () {
             console.log('POST success.');
         }).fail(function () {
-            console.log('Fail on new Todo POST');
-            printErrorMessage('Error adding new todo item.');
+            console.log('Fail on new Calendar POST');
+            printErrorMessage('Error adding new calendar item.');
         }).always(function () {
 
-            // Refresh TodoList
+            // Refresh Calendar
             description.val('');
             refreshViewData();
         });
@@ -205,22 +205,22 @@
     function registerViewClickHandlers() {
 
         // Add Button
-        $(".view-addTodo").click(function () {
+        $(".view-addCalendar").click(function () {
             clearErrorMessage();
 
-            // Validate Todo Description
-            var $description = $("#view-todoDescription");
+            // Validate Calendar Description
+            var $description = $("#view-calendarDescription");
             if ($description.val().length <= 0) {
-                printErrorMessage('Please enter a valid Todo description');
+                printErrorMessage('Please enter a valid Calendar description');
                 return;
             }
 
             clientApplication.acquireTokenSilent(scope)
                 .then(function (token) {
-                    postNewTodo(token, $description);
+                    postNewCalendar(token, $description);
                 }, function (error) {
                     clientApplication.acquireTokenPopup(scope).then(function (token) {
-                        deleteTodoItem(token, $description);
+                        deleteCalendarItem(token, $description);
                     }, function (error) {
                         printErrorMessage(error);
                     });
@@ -240,7 +240,7 @@
     }
 
     // Module
-    window.todoListCtrl = {
+    window.calendarCtrl = {
         requireADLogin: true,
         preProcess: function (html) {
 

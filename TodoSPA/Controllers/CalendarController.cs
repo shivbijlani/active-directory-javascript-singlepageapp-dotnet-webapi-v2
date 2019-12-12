@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Claims;
@@ -11,15 +9,12 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using Microsoft.Graph;
-using Microsoft.Graph.Auth;
 using Microsoft.Identity.Client;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using TodoListService;
-using TodoSPA.DAL;
-using TodoSPA.Models;
+using CalendarListService;
+using CalendarSPA.DAL;
 
-namespace TodoSPA.Controllers
+namespace CalendarSPA.Controllers
 {
     [Authorize]
     public class CalendarController : ApiController
@@ -29,7 +24,7 @@ namespace TodoSPA.Controllers
         private static string aadInstance = ConfigurationManager.AppSettings["ida:AADInstance"];
         private static string tenant = ConfigurationManager.AppSettings["ida:Tenant"];
         private static string clientId = ConfigurationManager.AppSettings["ida:ClientID"];
-        private TodoListServiceContext dbContext = new TodoListServiceContext();
+        private CalendarServiceContext dbContext = new CalendarServiceContext();
         private static string graphUserUrl = ConfigurationManager.AppSettings["ida:GraphUserUrl"];
         private static string graphCalendarUrl = ConfigurationManager.AppSettings["ida:graphCalendarUrl"];
         private static string[] scopes = { "Calendars.ReadWrite" };
@@ -37,36 +32,6 @@ namespace TodoSPA.Controllers
         public async Task<Event[]> Get()
         {
             return await CallGraphAPIOnBehalfOfUser();
-        }
-
-        private async Task<Event[]> CallGraphAPIOnBehalfOfUserV2()
-        {
-            IConfidentialClientApplication confidentialClientApplication = ConfidentialClientApplicationBuilder
-                .Create(clientId)
-                .WithRedirectUri(redirectUri)
-                .WithClientSecret(appKey)
-                .Build();
-
-            OnBehalfOfProvider authProvider = new OnBehalfOfProvider(confidentialClientApplication, scopes);
-            GraphServiceClient graphClient = new GraphServiceClient(authProvider);
-
-            var events = await graphClient.Me.Events
-                .Request()
-                .Header("Prefer", "outlook.timezone=\"Pacific Standard Time\"")
-                .Select(e => new
-                {
-                    e.Subject,
-                    e.Body,
-                    e.BodyPreview,
-                    e.Organizer,
-                    e.Attendees,
-                    e.Start,
-                    e.End,
-                    e.Location
-                })
-                .GetAsync();
-
-            return events.ToArray();
         }
 
         private async Task<Event[]> CallGraphAPIOnBehalfOfUser()

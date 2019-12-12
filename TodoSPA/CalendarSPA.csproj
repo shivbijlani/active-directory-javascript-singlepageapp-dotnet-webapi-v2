@@ -52,9 +52,6 @@
     <Reference Include="Microsoft.Graph, Version=1.20.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Graph.1.20.0\lib\net45\Microsoft.Graph.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.Graph.Auth, Version=0.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Graph.Auth.1.0.0-preview.2\lib\net45\Microsoft.Graph.Auth.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Graph.Core, Version=1.18.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Graph.Core.1.18.0\lib\net45\Microsoft.Graph.Core.dll</HintPath>
     </Reference>
@@ -194,13 +191,12 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="ClaimsPrincipalExtensions.cs" />
     <Compile Include="Controllers\CalendarController.cs" />
-    <Compile Include="Controllers\TodoListController.cs" />
-    <Compile Include="DAL\TodoListServiceContext.cs" />
-    <Compile Include="DAL\TodoListServiceInitializer.cs" />
+    <Compile Include="DAL\CalendarServiceContext.cs" />
+    <Compile Include="DAL\CalendarServiceInitializer.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Todo.cs" />
+    <Compile Include="Models\Calendar.cs" />
     <Compile Include="MSALPerUserSqlTokenCacheProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -209,10 +205,10 @@
     <Content Include="App\Content\app.css" />
     <Content Include="App\Scripts\app.js" />
     <Content Include="App\Scripts\Ctrls\homeCtrl.js" />
-    <Content Include="App\Scripts\Ctrls\todoListCtrl.js" />
+    <Content Include="App\Scripts\Ctrls\calendarCtrl.js" />
     <Content Include="App\Scripts\Ctrls\userDataCtrl.js" />
     <Content Include="App\Views\Home.html" />
-    <Content Include="App\Views\TodoList.html" />
+    <Content Include="App\Views\Calendar.html" />
     <Content Include="App\Views\UserData.html" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />

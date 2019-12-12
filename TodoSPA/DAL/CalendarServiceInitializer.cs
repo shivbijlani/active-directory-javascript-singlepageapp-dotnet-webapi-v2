@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TodoSPA.DAL
+namespace CalendarSPA.DAL
 {
-    class TodoListServiceInitializer : DropCreateDatabaseIfModelChanges<TodoListServiceContext>
+    class CalendarServiceInitializer : DropCreateDatabaseIfModelChanges<CalendarServiceContext>
     {
     }
 }

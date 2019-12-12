@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TodoSPA.Models
+namespace CalendarSPA.Models
 {
-    public class Todo
+    public class Calendar
     {
         public int ID { get; set; }
         public string Description { get; set; }

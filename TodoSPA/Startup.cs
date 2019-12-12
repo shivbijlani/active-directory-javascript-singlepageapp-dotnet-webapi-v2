@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartup(typeof(TodoSPA.Startup))]
+[assembly: OwinStartup(typeof(CalendarSPA.Startup))]
 
-namespace TodoSPA
+namespace CalendarSPA
 {
     public partial class Startup
     {

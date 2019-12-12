@@ -72,8 +72,8 @@ var clientApplication;
         switch (view.toLowerCase()) {
             case 'home':
                 return homeCtrl;
-            case 'todolist':
-                return todoListCtrl;
+            case 'calendar':
+                return calendarCtrl;
             case 'userdata':
                 return userDataCtrl;
         }

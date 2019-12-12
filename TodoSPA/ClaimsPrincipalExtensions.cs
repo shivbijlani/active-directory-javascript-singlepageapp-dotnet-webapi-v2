@@ -26,7 +26,7 @@ using Microsoft.Identity.Client;
 using System;
 using System.Security.Claims;
 
-namespace TodoListService.Utils
+namespace CalendarListService.Utils
 {
     /// <summary>
     /// Extensions around ClaimsPrincipal.

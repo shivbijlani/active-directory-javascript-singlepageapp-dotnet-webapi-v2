@@ -29,10 +29,10 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Security.Claims;
-using TodoListService.Utils;
-using TodoSPA.DAL;
+using CalendarListService.Utils;
+using CalendarSPA.DAL;
 
-namespace TodoListService
+namespace CalendarListService
 {
     /// <summary>
     /// This is a MSAL's TokenCache implementation for one user. It uses Sql server as a backend store and uses the Entity Framework to read and write to that database.
@@ -43,7 +43,7 @@ namespace TodoListService
         /// <summary>
         /// The EF's DBContext object to be used to read and write from the Sql server database.
         /// </summary>
-        private TodoListServiceContext TokenCacheDb;
+        private CalendarServiceContext TokenCacheDb;
 
         /// <summary>
         /// This keeps the latest copy of the token in memory to save calls to DB, if possible.
@@ -55,7 +55,7 @@ namespace TodoListService
         /// </summary>
         internal ClaimsPrincipal SignedInUser;
 
-        public MSALPerUserSqlTokenCacheProvider(ITokenCache tokenCache, TodoListServiceContext tokenCacheDbContext, ClaimsPrincipal user)
+        public MSALPerUserSqlTokenCacheProvider(ITokenCache tokenCache, CalendarServiceContext tokenCacheDbContext, ClaimsPrincipal user)
         {
             this.TokenCacheDb = tokenCacheDbContext;
             this.SignedInUser = user;

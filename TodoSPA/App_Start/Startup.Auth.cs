@@ -10,7 +10,7 @@ using System.IdentityModel.Tokens;
 using System.Linq;
 using System.Web;
 
-namespace TodoSPA
+namespace CalendarSPA
 {
     public partial class Startup
     {
@@ -18,7 +18,7 @@ namespace TodoSPA
         {
             var tvps = new TokenValidationParameters
             {
-                // In this app, the TodoListClient and TodoListService
+                // In this app, the CalendarListClient and CalendarListService
                 // are represented using the same Application Id - we use
                 // the Application Id to represent the audience, or the
                 // intended recipient of tokens.

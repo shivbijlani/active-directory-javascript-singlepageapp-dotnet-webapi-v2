@@ -7,15 +7,15 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
-using TodoSPA.DAL;
+using CalendarSPA.DAL;
 
-namespace TodoSPA
+namespace CalendarSPA
 {
     public class WebApiApplication : System.Web.HttpApplication
     {
         protected void Application_Start()
         {
-            Database.SetInitializer<TodoListServiceContext>(new TodoListServiceInitializer());
+            Database.SetInitializer<CalendarServiceContext>(new CalendarServiceInitializer());
             GlobalConfiguration.Configure(WebApiConfig.Register);
         }
     }
